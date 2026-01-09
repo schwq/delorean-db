@@ -7,9 +7,7 @@
 #error "This is a c++ header! Something must went wrong"
 #endif
 
-#if __cplusplus >= 202302L
-#pragma message "Generating c++23 code"
-#else
+#if __cplusplus < 202302L
 #error "This code and features is meant to run on c++23"
 #endif
 
@@ -55,7 +53,8 @@
 #define CONSTEXPR inline
 #endif
 
-#include <iostream>
+#include "platform_detect.hpp"
+
 #include <print>
 #include <string>
 

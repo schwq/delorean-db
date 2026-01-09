@@ -8,20 +8,24 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-if (MSVC) 
-    add_compile_options(/W4)
-else()
-    add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
 
+include(FetchContent)
+FetchContent_Declare(
+    googletest 
+  URL https://github.com/google/googletest/archive/52eb8108c5bdec04579160ae17225d66034bd723.zip
+)
 
-add_subdirectory(Engine/Source)
+FetchContent_MakeAvailable(googletest)
 
-add_library(deloreandb ${SOURCE_FILES})
+enable_testing()
 
-add_executable(deloreandb-cli ${PROJECT_SOURCE_DIR}/Engine/Source/main.cc)
+include_directories(deloreandb-cli src/include)
+
+add_subdirectory(test)
+add_subdirectory(src)
+
+add_executable(deloreandb-cli ${PROJECT_SOURCE_DIR}/src/main.cc)
 
 target_link_libraries(deloreandb-cli PRIVATE deloreandb)
-target_compile_features(deloreandb PRIVATE cxx_std_23)
 
 add_definitions(-DDEBUG_ENABLED)

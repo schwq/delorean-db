@@ -1,5 +1,6 @@
-#include "ArenaAllocator.hpp"
+#include "deloreandb/mem/arena_alloc.hpp"
 #include <cassert>
+
 using namespace Delorean;
 
 ArenaAllocator::~ArenaAllocator()
