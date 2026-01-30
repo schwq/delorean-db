@@ -71,6 +71,10 @@ typedef int32_t i32;
 typedef int16_t i16;
 typedef int8_t i8;
 
+#define MAKE_NON_COPYABLE(T) \
+  T(const T&) = delete;      \
+  T& operator=(const T&) = delete;
+
 namespace Delorean
 {
 

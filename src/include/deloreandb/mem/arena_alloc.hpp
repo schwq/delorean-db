@@ -1,11 +1,10 @@
 #pragma once
 
-#include <concepts>
+#include <utility>
 #include <vector>
 #include "deloreandb/common.hpp"
 
 namespace Delorean
-
 {
 
 struct ArenaAllocatorChunk
@@ -63,6 +62,14 @@ class ArenaAllocator
     static_assert(!std::is_void_v<T>);
     void* mem = Alloc(sizeof(T) * count, alignof(T));
     return reinterpret_cast<T*>(mem);
+  }
+
+  template <typename T, typename... Args>
+  T* AllocTypeConstructor(Args&... args)
+  {
+    static_assert(!std::is_void_v<T>);
+    void* mem = Alloc(sizeof(T), alignof(T));
+    return new (mem) T(std::forward<Args>(args)...);  // TODO: Check
   }
 
   /**

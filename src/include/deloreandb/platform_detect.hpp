@@ -8,7 +8,7 @@
 #endif
 
 #elif defined(__MINGW32__)
-#defne DELOREAN_SYSTEM_WINDOWS_MING32
+#define DELOREAN_SYSTEM_WINDOWS_MING32
 #include <Window.h>
 
 #elif defined(__APPLE__) || defined(__MACH__)
