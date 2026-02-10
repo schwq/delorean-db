@@ -24,6 +24,8 @@ include_directories(deloreandb-cli src/include)
 add_subdirectory(test)
 add_subdirectory(src)
 
+add_compile_options(-O3 -march=native -mavx2 -std=c++23)
+
 add_executable(deloreandb-cli ${PROJECT_SOURCE_DIR}/src/main.cc)
 
 target_link_libraries(deloreandb-cli PRIVATE deloreandb)

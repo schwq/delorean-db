@@ -1,7 +1,15 @@
 include_directories(deloreandb include)
 
 
-add_library(deloreandb deloreandb.cc mem/arena_alloc.cc)
+add_library(deloreandb 
+deloreandb.cc 
+mem/arena_alloc.cc 
+kernels/avx2.cc 
+kernels/scalar.cc
+kernels/sse2.cc
+kernels/sse41.cc
+kernels/avx512.cc
+)
 
 target_include_directories(deloreandb PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 

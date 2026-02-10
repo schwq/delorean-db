@@ -53,14 +53,22 @@
 #define CONSTEXPR inline
 #endif
 
-#include "platform_detect.hpp"
-
+#include <iostream>
 #include <print>
 #include <string>
+#include "platform_detect.hpp"
 
 #define KB(kb) (kb * 1024)
 #define MB(mb) (KB(mb * 1024))
 #define GB(gb) (MB(gb * 1024))
+
+#if defined(_MSC_VER)
+#define noalias __restrict
+#else
+#define noalias __restrict__
+#endif
+
+#define FOR(n, i) for (u64 n = 0; n < i; n++)
 
 typedef u_int64_t u64;
 typedef u_int32_t u32;
@@ -70,6 +78,8 @@ typedef int64_t i64;
 typedef int32_t i32;
 typedef int16_t i16;
 typedef int8_t i8;
+typedef double f64;
+typedef float f32;
 
 #define MAKE_NON_COPYABLE(T) \
   T(const T&) = delete;      \

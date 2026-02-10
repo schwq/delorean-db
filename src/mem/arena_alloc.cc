@@ -8,7 +8,6 @@ ArenaAllocator::~ArenaAllocator()
   for (const auto& chunk : mChunks) {
     std::free(chunk.mBuffer);
   }
-  Debug::LogInfo("Arena allocator was been free!");
 }
 
 static INLINE u64 AlignUp(u64 value, u64 alignment)
@@ -23,15 +22,8 @@ void* ArenaAllocator::Alloc(u64 size, u64 alignment)
 
   size = AlignUp(size, alignment);
 
-  Debug::LogInfo("Allocating memory size: [%d] alignment: [%d]", size,
-                 alignment);
-
   if (size > mChunkSize) {
     AddChunk(size, alignment);
-
-    Debug::LogInfo(
-        "Adding bigger chunk to hold size: [%d] current chunk size [%d]", size,
-        mChunkSize);
 
     ArenaAllocatorChunk& large = mChunks.back();
     large.mOffset = size;
@@ -58,13 +50,12 @@ void ArenaAllocator::Reset()
     chunk.mOffset = 0;
   }
   mChunks.resize(1);
-  Debug::LogInfo("Reset arena allocator was be called!");
 }
 
 void ArenaAllocator::AddChunk(u64 size, u64 alignment)
 {
   alignment = std::max<u64>(64, alignment);
-  size = AlignUp(size, std::max<u64>(64, alignment));
+  size = AlignUp(size, alignment);
 
   std::byte* buffer =
       static_cast<std::byte*>(std::aligned_alloc(alignment, size));
@@ -72,7 +63,6 @@ void ArenaAllocator::AddChunk(u64 size, u64 alignment)
     throw std::bad_alloc();
   }
   mChunks.push_back({.mBuffer = buffer, .mCapacity = size, .mOffset = 0});
-  Debug::LogInfo("Adding chunk! Current count of chunks: [%d]", mChunks.size());
 }
 
 u64 ArenaAllocator::Capacity() const
