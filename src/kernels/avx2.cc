@@ -189,12 +189,6 @@ ATTR_HOT void AVX2_Mul_i32(const i32* noalias a, const i32* noalias b,
   }
 }
 
-ATTR_HOT void AVX2_Mul_i64(const i64* noalias a, const i64* noalias b,
-                           i64* noalias out, u64 count)
-{
-  UNREACHABLE;
-}
-
 ATTR_HOT void AVX2_Div_f32(const f32* noalias a, const f32* noalias b,
                            f32* noalias out, u64 count)
 {
@@ -227,17 +221,5 @@ ATTR_HOT void AVX2_Div_f64(const f64* noalias a, const f64* noalias b,
   for (; i < count; i++) {
     out[i] = a[i] / b[i];
   }
-}
-
-ATTR_HOT void AVX2_Div_i32(const i32* noalias a, const i32* noalias b,
-                           i32* noalias out, u64 count)
-{
-  UNREACHABLE;
-}
-
-ATTR_HOT void AVX2_Div_i64(const i64* noalias a, const i64* noalias b,
-                           i64* noalias out, u64 count)
-{
-  UNREACHABLE;
 }
 }

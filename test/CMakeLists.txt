@@ -1,4 +1,4 @@
-add_executable(deloreandb-tests db_tests.cc)
+add_executable(deloreandb-tests SIMD.cc)
 
 target_link_libraries(deloreandb-tests PRIVATE deloreandb gtest_main)
 

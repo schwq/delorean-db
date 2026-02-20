@@ -19,12 +19,30 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
+message(STATUS "SIMD selected: ${DELOREAN_SIMD}")
+
+if (DELOREAN_SIMD STREQUAL "AVX512")
+    add_compile_definitions(DELOREAN_AVX512)
+elseif (DELOREAN_SIMD STREQUAL "AVX2")
+    add_compile_definitions(DELOREAN_AVX2)
+elseif (DELOREAN_SIMD STREQUAL "SSE41")
+    add_compile_definitions(DELOREAN_SSE41)
+elseif (DELOREAN_SIMD STREQUAL "SSE2")
+    add_compile_definitions(DELOREAN_SSE2)
+else()
+    add_compile_definitions(DELOREAN_SCALAR)
+endif()
+
 include_directories(deloreandb-cli src/include)
 
 add_subdirectory(test)
 add_subdirectory(src)
 
-add_compile_options(-O3 -march=native -mavx2 -std=c++23)
+if (MSVC)
+    add_compile_options(/O2)
+else()
+    add_compile_options(-O3)
+endif()
 
 add_executable(deloreandb-cli ${PROJECT_SOURCE_DIR}/src/main.cc)
 
